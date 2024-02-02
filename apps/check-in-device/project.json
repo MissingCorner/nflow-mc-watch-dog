@@ -1,0 +1,52 @@
+{
+  "name": "check-in-device",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/check-in-device/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/check-in-device",
+        "main": "apps/check-in-device/src/main.ts",
+        "tsConfig": "apps/check-in-device/tsconfig.app.json",
+        "webpackConfig": "webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "check-in-device:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "check-in-device:build:development"
+        },
+        "production": {
+          "buildTarget": "check-in-device:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/check-in-device/jest.config.ts"
+      },
+      "dependsOn": [{ "target": "build" }]
+    }
+  },
+  "tags": []
+}
